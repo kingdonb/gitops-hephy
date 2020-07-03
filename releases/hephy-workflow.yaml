@@ -16,6 +16,7 @@ spec:
     git: git@github.com:kingdonb/gitops-hephy
     path: workflow
     ref: master
+    skipDepUpdate: true
   values:
     global:
       storage: minio
