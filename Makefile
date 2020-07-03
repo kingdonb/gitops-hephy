@@ -1,5 +1,5 @@
 .PHONY: helm-release-crd fluxcd-ns flux-install all fluxctl-sync helm-operator-install sealed-secrets-key backup-key
-.PHONY: restore-key uninstall-sealed-secrets uninstall-flux-helm-operator uninstall
+.PHONY: restore-key uninstall-sealed-secrets uninstall-flux-helm-operator uninstall identity
 
 fluxctl-sync:
 	fluxctl sync
@@ -44,3 +44,6 @@ uninstall-flux-helm-operator:
 	kubectl delete --ignore-not-found=true crd helmreleases.helm.fluxcd.io
 
 uninstall: uninstall-sealed-secrets uninstall-flux-helm-operator
+
+identity:
+	fluxctl identity
