@@ -15,7 +15,8 @@ fluxcd-ns:
 flux-install: helm-release-crd fluxcd-ns
 	helm upgrade -i flux fluxcd/flux --wait \
 		--namespace fluxcd \
-		--set git.url=git@github.com:yebyen/helm-operator-get-started
+		--set git.path=releases,secrets \
+		--set git.url=git@github.com:kingdonb/gitops-hephy
 
 sealed-secrets-key:
 	kubectl create namespace adm
