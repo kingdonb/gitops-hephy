@@ -1,6 +1,6 @@
-org: "hephy"
+org: "quay.io/kingdonb"
 pull_policy: "IfNotPresent"
-docker_tag: v2.20.7
+docker_tag: k8s-1-16-chart-update
 app_pull_policy: "IfNotPresent"
 # A comma-separated list of URLs to send app release information to
 # See https://deis.com/docs/workflow/managing-workflow/deploy-hooks
