@@ -1,4 +1,5 @@
-.PHONY: helm-release-crd fluxcd-ns flux-install all fluxctl-sync helm-operator-install sealed-secrets-key backup-key restore-key
+.PHONY: helm-release-crd fluxcd-ns flux-install all fluxctl-sync helm-operator-install sealed-secrets-key backup-key
+.PHONY: restore-key uninstall-sealed-secrets uninstall-flux-helm-operator uninstall
 
 fluxctl-sync:
 	fluxctl sync
@@ -17,6 +18,7 @@ flux-install: helm-release-crd fluxcd-ns
 		--set git.url=git@github.com:yebyen/helm-operator-get-started
 
 sealed-secrets-key:
+	kubectl create namespace adm
 	kubectl apply -f sealed-secrets-key.yaml
 
 helm-operator-install: sealed-secrets-key
@@ -32,3 +34,13 @@ backup-key:
 restore-key:
 	kubectl replace secret -n adm sealed-secrets-key -f sealed-secrets-key.yaml
 	kubectl delete pod -n adm -l app=sealed-secrets
+
+uninstall-sealed-secrets:
+	kubectl delete --ignore-not-found=true clusterrole/secrets-unsealer ns/adm clusterrolebinding/sealed-secrets
+	kubectl delete --ignore-not-found=true crd sealedsecrets.bitnami.com
+
+uninstall-flux-helm-operator:
+	kubectl delete --ignore-not-found=true ns fluxcd
+	kubectl delete --ignore-not-found=true crd helmreleases.helm.fluxcd.io
+
+uninstall: uninstall-sealed-secrets uninstall-flux-helm-operator
