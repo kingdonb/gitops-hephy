@@ -1,4 +1,7 @@
-.PHONY: helm-release-crd fluxcd-ns flux-install all
+.PHONY: helm-release-crd fluxcd-ns flux-install all fluxctl-sync
+
+fluxctl-sync:
+	fluxctl sync
 
 all: flux-install
 
