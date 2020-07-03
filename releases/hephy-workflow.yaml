@@ -25,4 +25,4 @@ spec:
       use_cni: true
     router:
       host_port:
-        enabled: true
+        enabled: false
