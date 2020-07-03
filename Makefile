@@ -1,4 +1,4 @@
-.PHONY: helm-release-crd fluxcd-ns flux-install all fluxctl-sync helm-operator-install
+.PHONY: helm-release-crd fluxcd-ns flux-install all fluxctl-sync helm-operator-install sealed-secrets-key backup-key restore-key
 
 fluxctl-sync:
 	fluxctl sync
@@ -16,8 +16,19 @@ flux-install: helm-release-crd fluxcd-ns
 		--namespace fluxcd \
 		--set git.url=git@github.com:yebyen/helm-operator-get-started
 
-helm-operator-install:
+sealed-secrets-key:
+	kubectl apply -f sealed-secrets-key.yaml
+
+helm-operator-install: sealed-secrets-key
 	helm upgrade -i helm-operator fluxcd/helm-operator --wait \
 		--namespace fluxcd \
 		--set git.ssh.secretName=flux-git-deploy \
+		--set chartsSyncInterval=1m \
 		--set helm.versions=v3
+
+backup-key:
+	kubectl get secret -n adm -l sealedsecrets.bitnami.com/sealed-secrets-key=active -o yaml --export > sealed-secrets-key.yaml
+
+restore-key:
+	kubectl replace secret -n adm sealed-secrets-key -f sealed-secrets-key.yaml
+	kubectl delete pod -n adm -l app=sealed-secrets
