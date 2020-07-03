@@ -1,5 +1,5 @@
 {{- if eq .Values.global.registry_location "on-cluster" }}
-apiVersion: extensions/v1beta1
+apiVersion: {{ template "APIVersion" . }}
 kind: DaemonSet
 metadata:
   name: deis-registry-proxy
