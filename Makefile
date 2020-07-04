@@ -26,7 +26,7 @@ helm-operator-install: sealed-secrets-key
 	helm upgrade -i helm-operator fluxcd/helm-operator --wait \
 		--namespace fluxcd \
 		--set git.ssh.secretName=flux-git-deploy \
-		--set git.pollInterval=5m \
+		--set git.pollInterval=1m \
 		--set chartsSyncInterval=1m \
 		--set helm.versions=v3
 
