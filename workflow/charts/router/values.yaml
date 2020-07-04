@@ -1,6 +1,6 @@
 org: "quay.io/kingdonb"
 pull_policy: "IfNotPresent"
-docker_tag: k8s-1-16-chart-update
+docker_tag: git-142e0f1
 platform_domain: ""
 dhparam: ""
 # limits_cpu: "100m"
