@@ -17,6 +17,8 @@ spec:
     name: nginx-ingress
     version: 1.40.2
   values:
+    tcp:
+      2222: "deis/deis-builder:2222"
     controller:
       hostNetwork: true
       daemonSet:
