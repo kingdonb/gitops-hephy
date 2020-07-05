@@ -21,7 +21,7 @@ spec:
       existingSecret: hephynator-oauth2-secret
     extraArgs:
       provider: "github"
-      github-user: "yebyen,kingdonb,cryptophobia"
+      github-team: "kingdon-ci"
     ingress:
       enabled: true
       path: /oauth2
