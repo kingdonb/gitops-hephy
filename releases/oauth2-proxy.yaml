@@ -29,7 +29,7 @@ spec:
         - hephynator.team.hephy.rocks
       annotations:
         kubernetes.io/ingress.class: nginx
-        certmanager.k8s.io/cluster-issuer: letsencrypt-staging
+        certmanager.io/cluster-issuer: letsencrypt-staging
       tls:
       - secretName: hephynator-tls
         hosts:
