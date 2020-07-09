@@ -4,7 +4,7 @@
 fluxctl-sync:
 	fluxctl sync
 
-all: flux-install helm-operator-install
+all: flux-install identity helm-operator-install
 
 helm-release-crd:
 	kubectl apply -f https://raw.githubusercontent.com/fluxcd/helm-operator/master/deploy/crds.yaml
