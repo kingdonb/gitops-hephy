@@ -40,7 +40,12 @@ helm-operator-install: # sealed-secrets-key
 		--set git.ssh.secretName=flux-git-deploy \
 		--set git.pollInterval=1m \
 		--set chartsSyncInterval=1m \
-		--set helm.versions=v3
+		--set helm.versions=v3 \
+		--set allowNamespace=kingdonb \
+		--skip-crds \
+		--set rbac.create=false \
+		--set clusterRole.create=false \
+		--set serviceAccount.create=false
 
 backup-key:
 	kubectl get secret -n $(ADM_NAMESPACE) -l sealedsecrets.bitnami.com/sealed-secrets-key=active -o yaml --export > sealed-secrets-key.yaml
