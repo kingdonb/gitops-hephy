@@ -25,7 +25,9 @@ flux-install: fluxcd-repo
 		--set git.path="releases\,secrets" \
 		--set git.branch=kingdonb \
 		--set git.url=git@github.com:kingdonb/gitops-hephy \
+		--set rbac.create=false \
 		--set clusterRole.create=false \
+		--set serviceAccount.create=false \
 		--set allowedNamespaces={kingdonb}
 
 sealed-secrets-key:
