@@ -9,18 +9,24 @@ fluxctl-sync:
 
 all: flux-install identity helm-operator-install
 
+fluxcd-repo:
+	helm repo add fluxcd https://charts.fluxcd.io
+	touch fluxcd-repo
+
 # helm-release-crd:
 # 	kubectl apply -f https://raw.githubusercontent.com/fluxcd/helm-operator/master/deploy/crds.yaml
 
 # fluxcd-ns:
 # 	kubectl create namespace fluxcd
 
-flux-install:
+flux-install: fluxcd-repo
 	helm upgrade -i flux fluxcd/flux --wait \
 		--namespace $(NAMESPACE) \
 		--set git.path="releases\,secrets" \
 		--set git.branch=kingdonb \
-		--set git.url=git@github.com:kingdonb/gitops-hephy
+		--set git.url=git@github.com:kingdonb/gitops-hephy \
+		--set clusterRole.create=false \
+		--set allowedNamespaces={kingdonb}
 
 sealed-secrets-key:
 	kubectl create namespace $(ADM_NAMESPACE)
