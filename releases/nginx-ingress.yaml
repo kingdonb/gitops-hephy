@@ -7,7 +7,7 @@ apiVersion: helm.fluxcd.io/v1
 kind: HelmRelease
 metadata:
   name: ingress
-  namespace: nginx-ingress
+  namespace: kingdonb
   annotations:
     fluxcd.io/automated: "false"
 spec:
@@ -20,6 +20,10 @@ spec:
     tcp:
       2222: "deis/deis-builder:2222"
     controller:
+      watchNamespace: kingdonb
+      ingressClass: kingdonb
+      useIngressClassOnly: true
+      enableCustomResources: false
       hostNetwork: true
       daemonSet:
         useHostPort: true
