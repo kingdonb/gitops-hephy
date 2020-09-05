@@ -1,24 +1,25 @@
-.PHONY: helm-release-crd flux-install all fluxctl-sync helm-operator-install sealed-secrets-key backup-key
+.PHONY: flux-install all fluxctl-sync helm-operator-install sealed-secrets-key backup-key
 .PHONY: restore-key uninstall-sealed-secrets uninstall-flux-helm-operator uninstall identity
 
 NAMESPACE := kingdonb
-ADM_NAMESPACE := adm
+ADM_NAMESPACE := kingdonb
 
 fluxctl-sync:
 	fluxctl sync
 
 all: flux-install identity helm-operator-install
 
-helm-release-crd:
-	kubectl apply -f https://raw.githubusercontent.com/fluxcd/helm-operator/master/deploy/crds.yaml
+# helm-release-crd:
+# 	kubectl apply -f https://raw.githubusercontent.com/fluxcd/helm-operator/master/deploy/crds.yaml
 
 # fluxcd-ns:
 # 	kubectl create namespace fluxcd
 
-flux-install: helm-release-crd # fluxcd-ns
+flux-install:
 	helm upgrade -i flux fluxcd/flux --wait \
 		--namespace $(NAMESPACE) \
 		--set git.path="releases\,secrets" \
+		--set git.branch=kingdonb \
 		--set git.url=git@github.com:kingdonb/gitops-hephy
 
 sealed-secrets-key:
