@@ -49,7 +49,7 @@ helm-operator-install: # sealed-secrets-key
 		--set serviceAccount.create=true
 
 backup-key:
-	kubectl get secret -n $(ADM_NAMESPACE) -l sealedsecrets.bitnami.com/sealed-secrets-key=active -o yaml --export > sealed-secrets-key.yaml
+	kubectl get secret -n $(ADM_NAMESPACE) -l sealedsecrets.bitnami.com/sealed-secrets-key=active -o yaml > sealed-secrets-key.yaml
 
 restore-key:
 	kubectl replace secret -n $(ADM_NAMESPACE) sealed-secrets-key -f sealed-secrets-key.yaml
