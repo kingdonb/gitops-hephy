@@ -27,7 +27,7 @@ flux-install: fluxcd-repo
 		--set git.branch=kingdonb \
 		--set git.url=git@github.com:kingdonb/gitops-hephy \
 		--set rbac.create=true \
-		--set clusterRole.create=false \
+		--set clusterRole.create=true \
 		--set serviceAccount.create=true \
 		--set allowedNamespaces={kingdonb}
 
@@ -45,7 +45,7 @@ helm-operator-install: # sealed-secrets-key
 		--set allowNamespace=kingdonb \
 		--skip-crds \
 		--set rbac.create=true \
-		--set clusterRole.create=false \
+		--set clusterRole.create=true \
 		--set serviceAccount.create=true
 
 backup-key:
