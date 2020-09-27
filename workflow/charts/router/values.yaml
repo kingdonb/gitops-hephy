@@ -1,6 +1,6 @@
 org: "quay.io/kingdonb"
 pull_policy: "IfNotPresent"
-docker_tag: git-142e0f1
+docker_tag: git-80084eb
 platform_domain: ""
 dhparam: ""
 # limits_cpu: "100m"

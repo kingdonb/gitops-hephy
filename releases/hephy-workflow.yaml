@@ -23,7 +23,7 @@ spec:
       database_location: on-cluster
       use_rbac: true
       use_cni: true
-      experimental_native_ingress: true
+      experimental_native_ingress: false
     controller:
       platform_domain: team.hephy.rocks
     router:
