@@ -10,6 +10,7 @@ metadata:
   namespace: kingdonb
   annotations:
     fluxcd.io/automated: "false"
+    fluxcd.io/ignore: "true"
 spec:
   releaseName: ingress
   chart:
