@@ -1,5 +1,6 @@
 .PHONY: flux-install all fluxctl-sync helm-operator-install sealed-secrets-key backup-key
 .PHONY: restore-key uninstall-sealed-secrets uninstall-flux-helm-operator uninstall identity
+.PHONY: helm-release-crd
 
 NAMESPACE := kingdonb
 ADM_NAMESPACE := kingdonb
@@ -13,8 +14,8 @@ fluxcd-repo:
 	helm repo add fluxcd https://charts.fluxcd.io
 	touch fluxcd-repo
 
-# helm-release-crd:
-# 	kubectl apply -f https://raw.githubusercontent.com/fluxcd/helm-operator/master/deploy/crds.yaml
+helm-release-crd:
+	kubectl apply -f https://raw.githubusercontent.com/fluxcd/helm-operator/master/deploy/crds.yaml
 
 # fluxcd-ns:
 # 	kubectl create namespace fluxcd
@@ -25,9 +26,9 @@ flux-install: fluxcd-repo
 		--set git.path="releases\,secrets" \
 		--set git.branch=kingdonb \
 		--set git.url=git@github.com:kingdonb/gitops-hephy \
-		--set rbac.create=false \
+		--set rbac.create=true \
 		--set clusterRole.create=false \
-		--set serviceAccount.create=false \
+		--set serviceAccount.create=true \
 		--set allowedNamespaces={kingdonb}
 
 sealed-secrets-key:
@@ -43,9 +44,9 @@ helm-operator-install: # sealed-secrets-key
 		--set helm.versions=v3 \
 		--set allowNamespace=kingdonb \
 		--skip-crds \
-		--set rbac.create=false \
+		--set rbac.create=true \
 		--set clusterRole.create=false \
-		--set serviceAccount.create=false
+		--set serviceAccount.create=true
 
 backup-key:
 	kubectl get secret -n $(ADM_NAMESPACE) -l sealedsecrets.bitnami.com/sealed-secrets-key=active -o yaml --export > sealed-secrets-key.yaml
@@ -65,4 +66,4 @@ uninstall-flux-helm-operator:
 uninstall: uninstall-sealed-secrets uninstall-flux-helm-operator
 
 identity:
-	fluxctl identity
+	fluxctl --k8s-fwd-ns $(NAMESPACE) identity
